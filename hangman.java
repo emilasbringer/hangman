@@ -1,14 +1,18 @@
-import javafx.application.Application;
-import javafx.stage.Stage;
-
-import javax.swing.*;
-
 public class hangman {
     public static void main (String[] arg) {
 
         String secretword = randomWordGenerator();
+        int wordlength = secretword.length();
+        int i = 0;
 
-        JOptionPane.showMessageDialog(null, secretword);
+        char letters[] = new char[wordlength];
+
+        while(i < wordlength) {
+          letters[i] = secretword.charAt(i);
+          i++;
+        }
+
+
 
 
 
