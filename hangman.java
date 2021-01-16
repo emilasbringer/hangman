@@ -12,56 +12,58 @@ public class hangman {
         int correctguesses = 0;
         boolean isrunning = true;
         boolean madetrueguess = false;
+        boolean[] previouslyguessed = new boolean[wordlength];
 
         char letterguess;
         char[] secretletters = new char[wordlength];
-        char[] displayletters = new char [ToFlength];
+        char[] displayletters = new char[ToFlength];
         char understreck = '_';
 
-        for(int i = 0 ; i <= wordlength - 1 ; i++) {
-          secretletters[i] = secretword.charAt(i);
-          displayletters[i] = understreck;
+        for (int i = 0; i <= wordlength - 1; i++) {
+            secretletters[i] = secretword.charAt(i);
+            displayletters[i] = understreck;
+            previouslyguessed[i] = false;
         }
 
-        while(isrunning) {
+        while (isrunning) {
             guess = JOptionPane.showInputDialog("You have " + life + " guesses remaining! " + "\n" + Arrays.toString(displayletters));
             letterguess = guess.toUpperCase().charAt(0);
 
-            for(int i = 0 ; i <= wordlength - 1 ; i++) {
+            for (int i = 0; i <= wordlength - 1; i++) {
                 if (letterguess == secretletters[i]) {
-                    displayletters[i] = letterguess;
-                    correctguesses++;
-                    madetrueguess = true;
+                    if(!previouslyguessed[i]) {
+                        displayletters[i] = letterguess;
+                        correctguesses++;
+                        madetrueguess = true;
+                        previouslyguessed[i] = true;
+                    }
+                    else JOptionPane.showMessageDialog(null, "Aja baja no cheating the system!");
                 }
             }
-            if(!madetrueguess) {
+
+            if (!madetrueguess) {
                 madetrueguess = false;
                 life--;
             }
 
-            if(life == 0) {
+            if (life == 0) {
                 isrunning = false;
                 JOptionPane.showMessageDialog(null, "Game Over! You have 0 lifes remaining");
             }
 
-            if(correctguesses == wordlength){
+            if (correctguesses == wordlength) {
                 isrunning = false;
                 JOptionPane.showMessageDialog(null, "You Win! \n With " + life + " lives to spare!");
             }
+
+
         }
-
-
-
-
-
-
-
-
-
     }
+
 
     private static String randomWordGenerator() {
         String[] word = {"HUND", "FISK", "MAKARON", "ÅSNA", "GET", "FLÖJT", "SILL", "UNIVERSUM", "CHOCKLAD", "KANOT"};
         return word[(int) (Math.random() * word.length)];
     }
 }
+
