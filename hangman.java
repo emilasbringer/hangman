@@ -7,7 +7,6 @@ public class hangman {
         String secretword = randomWordGenerator();
         String guess;
         int wordlength = secretword.length();
-        int ToFlength = secretword.length();
         int life = 10;
         int correctguesses = 0;
         int falseguesses = 0;
@@ -17,7 +16,7 @@ public class hangman {
 
         char letterguess;
         char[] secretletters = new char[wordlength];
-        char[] displayletters = new char[ToFlength];
+        char[] displayletters = new char[wordlength];
         char[] falseguess = new char[life];
         char understreck = '_';
 
@@ -72,8 +71,6 @@ public class hangman {
                 isrunning = false;
                 JOptionPane.showMessageDialog(null, "You Win! \n With " + life + " lives to spare!");
             }
-
-
         }
     }
 
