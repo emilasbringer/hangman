@@ -48,9 +48,19 @@ public class hangman {
             }
 
             if (!madetrueguess) {
-                falseguess[falseguesses] = letterguess;
-                life--;
-                falseguesses++;
+                for(int i = 0 ; i <= falseguesses  ; i++){
+                    if (letterguess == falseguess[i]) {
+                        JOptionPane.showMessageDialog(null, "You already guessed that!");
+                        break;
+                    }
+                    else if(falseguess[i] == '\0'){
+                        falseguess[falseguesses] = letterguess;
+                        life--;
+                        if(falseguesses < 9)
+                            falseguesses++;
+                        break;
+                    }
+                }
             }
 
             if (life == 0) {
@@ -69,7 +79,7 @@ public class hangman {
 
 
     private static String randomWordGenerator() {
-        String[] word = {"HUND", "FISK", "MAKARON", "ÅSNA", "GET", "FLÖJT", "SILL", "UNIVERSUM", "CHOCKLAD", "KANOT"};
+        String[] word = {"CHOCKLAD", "CHORIZO", "CLICK", "FISK", "FLÖJT", "GET", "HUND", "HUS", "HUVUD", "HÖNA", "HOCKEY", "HOSTA", "KANOT", "MAKARON", "SILL", "UNIVERSUM", "ÅSNA"};
         return word[(int) (Math.random() * word.length)];
     }
 }
