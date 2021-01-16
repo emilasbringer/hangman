@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class hangman {
@@ -15,13 +14,13 @@ public class hangman {
         boolean madetrueguess = false;
 
         char letterguess;
-        char secretletters[] = new char[wordlength];
-        char displayletters[] = new char [ToFlength];
-        char empty = '_';
+        char[] secretletters = new char[wordlength];
+        char[] displayletters = new char [ToFlength];
+        char understreck = '_';
 
         for(int i = 0 ; i <= wordlength - 1 ; i++) {
           secretletters[i] = secretword.charAt(i);
-          displayletters[i] = empty;
+          displayletters[i] = understreck;
         }
 
         while(isrunning) {
@@ -34,6 +33,20 @@ public class hangman {
                     correctguesses++;
                     madetrueguess = true;
                 }
+            }
+            if(!madetrueguess) {
+                madetrueguess = false;
+                life--;
+            }
+
+            if(life == 0) {
+                isrunning = false;
+                JOptionPane.showMessageDialog(null, "Game Over! You have 0 lifes remaining");
+            }
+
+            if(correctguesses == wordlength){
+                isrunning = false;
+                JOptionPane.showMessageDialog(null, "You Win! \n With " + life + " lives to spare!");
             }
         }
 
