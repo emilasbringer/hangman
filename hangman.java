@@ -11,7 +11,7 @@ public class hangman {
         int life = 10;
         int correctguesses = 0;
         boolean isrunning = true;
-        boolean madetrueguess = false;
+        boolean madetrueguess;
         boolean[] previouslyguessed = new boolean[wordlength];
 
         char letterguess;
@@ -26,6 +26,7 @@ public class hangman {
         }
 
         while (isrunning) {
+            madetrueguess = false;
             guess = JOptionPane.showInputDialog("You have " + life + " guesses remaining! " + "\n" + Arrays.toString(displayletters));
             letterguess = guess.toUpperCase().charAt(0);
 
@@ -42,7 +43,6 @@ public class hangman {
             }
 
             if (!madetrueguess) {
-                madetrueguess = false;
                 life--;
             }
 
