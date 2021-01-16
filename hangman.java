@@ -10,6 +10,7 @@ public class hangman {
         int ToFlength = secretword.length();
         int life = 10;
         int correctguesses = 0;
+        int falseguesses = 0;
         boolean isrunning = true;
         boolean madetrueguess;
         boolean[] previouslyguessed = new boolean[wordlength];
@@ -17,6 +18,7 @@ public class hangman {
         char letterguess;
         char[] secretletters = new char[wordlength];
         char[] displayletters = new char[ToFlength];
+        char[] falseguess = new char[life];
         char understreck = '_';
 
         for (int i = 0; i <= wordlength - 1; i++) {
@@ -27,7 +29,7 @@ public class hangman {
 
         while (isrunning) {
             madetrueguess = false;
-            guess = JOptionPane.showInputDialog("You have " + life + " guesses remaining! " + "\n" + Arrays.toString(displayletters));
+            guess = JOptionPane.showInputDialog("You have " + life + " guesses remaining! " + "\n" + Arrays.toString(displayletters) + "\n" + "\n" + "Wrong guesses: " + Arrays.toString(falseguess));
             letterguess = guess.toUpperCase().charAt(0);
 
             for (int i = 0; i <= wordlength - 1; i++) {
@@ -46,7 +48,9 @@ public class hangman {
             }
 
             if (!madetrueguess) {
+                falseguess[falseguesses] = letterguess;
                 life--;
+                falseguesses++;
             }
 
             if (life == 0) {
