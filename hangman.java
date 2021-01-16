@@ -38,7 +38,10 @@ public class hangman {
                         madetrueguess = true;
                         previouslyguessed[i] = true;
                     }
-                    else JOptionPane.showMessageDialog(null, "Aja baja no cheating the system!");
+                    else {
+                        JOptionPane.showMessageDialog(null, "Aja baja no cheating the system!");
+                        break;
+                    }
                 }
             }
 
