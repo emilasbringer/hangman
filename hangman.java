@@ -9,22 +9,33 @@ public class hangman {
         String guess;
         int wordlength = secretword.length();
         int ToFlength = secretword.length();
-        int i = 0;
         int life = 10;
+        int correctguesses = 0;
+        boolean isrunning = true;
+        boolean madetrueguess = false;
 
-        char letters[] = new char[wordlength];
-        char trueorfalse[] = new char [ToFlength];
+        char letterguess;
+        char secretletters[] = new char[wordlength];
+        char displayletters[] = new char [ToFlength];
         char empty = '_';
 
-        while(i < wordlength) {
-          letters[i] = secretword.charAt(i);
-          trueorfalse[i] = empty;
-          i++;
+        for(int i = 0 ; i <= wordlength - 1 ; i++) {
+          secretletters[i] = secretword.charAt(i);
+          displayletters[i] = empty;
         }
 
-        guess = JOptionPane.showInputDialog("You have " + life + " guesses remaining! " + "\n" + Arrays.toString(trueorfalse));
+        while(isrunning) {
+            guess = JOptionPane.showInputDialog("You have " + life + " guesses remaining! " + "\n" + Arrays.toString(displayletters));
+            letterguess = guess.toUpperCase().charAt(0);
 
-
+            for(int i = 0 ; i <= wordlength - 1 ; i++) {
+                if (letterguess == secretletters[i]) {
+                    displayletters[i] = letterguess;
+                    correctguesses++;
+                    madetrueguess = true;
+                }
+            }
+        }
 
 
 
