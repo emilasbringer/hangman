@@ -28,8 +28,8 @@ public class hangman {
 
         while (isrunning) {
             madetrueguess = false;
-            guess = JOptionPane.showInputDialog("You have " + life + " guesses remaining! " + "\n" + Arrays.toString(displayletters) + "\n" + "\n" + "Wrong guesses: " + Arrays.toString(falseguess));
-            letterguess = guess.toUpperCase().charAt(0);
+            guess = hangmanGraphics(life, displayletters, falseguess);
+            letterguess = guess.charAt(0);
 
             for (int i = 0; i <= wordlength - 1; i++) {
                 if (letterguess == secretletters[i]) {
@@ -78,6 +78,13 @@ public class hangman {
     private static String randomWordGenerator() {
         String[] word = {"CHOCKLAD", "CHORIZO", "CLICK", "FISK", "FLÖJT", "GET", "HUND", "HUS", "HUVUD", "HÖNA", "HOCKEY", "HOSTA", "KANOT", "MAKARON", "SILL", "UNIVERSUM", "ÅSNA"};
         return word[(int) (Math.random() * word.length)];
+    }
+
+    private static String hangmanGraphics(int life, char displayletters[], char falseguess[]){
+        if (life == 10)
+            return JOptionPane.showInputDialog("You have " + life + " guesses remaining! " + "\n" + Arrays.toString(displayletters) + "\n" + "\n" + "Wrong guesses: " + Arrays.toString(falseguess));
+        else
+            return null;
     }
 }
 
