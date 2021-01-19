@@ -33,6 +33,8 @@ public class hangman {
             assert guess != null;
             letterguess = guess.charAt(0);
 
+//True guess check + anticheat same letter
+
             for (int i = 0; i <= wordlength - 1; i++) {
                 if (letterguess == secretletters[i]) {
                     if(!previouslyguessed[i]) {
@@ -48,6 +50,7 @@ public class hangman {
                 }
             }
 
+//falseguess checker + wrong guess tracker
             if (!madetrueguess) {
                 for(int i = 0 ; i <= falseguesses  ; i++){
                     if (letterguess == falseguess[i]) {
@@ -63,12 +66,12 @@ public class hangman {
                     }
                 }
             }
-
+//lifecounter + deathscreen
             if (life == 0) {
                 isrunning = false;
                 JOptionPane.showMessageDialog(null, "Game Over! You have 0 lifes remaining");
             }
-
+//all letters done? + Winscreen
             if (correctguesses == wordlength) {
                 isrunning = false;
                 JOptionPane.showMessageDialog(null, "You Win! \n With " + life + " lives to spare!");
