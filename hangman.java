@@ -20,6 +20,7 @@ public class hangman {
         char[] falseguess = new char[life];
         char understreck = '_';
 
+        JOptionPane.showMessageDialog(null, "Hello and welcome to my JOptionPane hangman game :]" + "\n" + " ");
         for (int i = 0; i <= wordlength - 1; i++) {
             secretletters[i] = secretword.charAt(i);
             displayletters[i] = understreck;
@@ -31,7 +32,7 @@ public class hangman {
             madetrueguess = false;
             guess = hangmanGraphics(life, displayletters, falseguess);
             assert guess != null;
-            letterguess = guess.charAt(0);
+            letterguess = guess.toUpperCase().charAt(0);
 
 //True guess check + anticheat same letter
 
@@ -44,7 +45,7 @@ public class hangman {
                         previouslyguessed[i] = true;
                     }
                     else {
-                        JOptionPane.showMessageDialog(null, "Aja baja no cheating the system!");
+                        JOptionPane.showMessageDialog(null, "Aja baja no cheating the system by typing a previously correct letter.");
                         break;
                     }
                 }
@@ -69,16 +70,16 @@ public class hangman {
 //lifecounter + deathscreen
             if (life == 0) {
                 isrunning = false;
-                JOptionPane.showMessageDialog(null, "Game Over! You have 0 lifes remaining");
+                JOptionPane.showMessageDialog(null, "Game Over! You have 0 guesses remaining");
             }
 //all letters done? + Winscreen
             if (correctguesses == wordlength) {
                 isrunning = false;
                 JOptionPane.showMessageDialog(null, "You Win! \n With " + life + " lives to spare!");
             }
-            System.out.println(life);
         }
     }
+
 
 
     private static String randomWordGenerator() {
@@ -123,4 +124,6 @@ public class hangman {
 
         return JOptionPane.showInputDialog("operation failed");
     }
+
+
 }
