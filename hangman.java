@@ -2,25 +2,28 @@ import javax.swing.*;
 import java.util.Arrays;
 
 public class hangman {
-    public static void main (String[] arg) {
 
-        String secretword = randomWordGenerator();
+    static String secretword = randomWordGenerator();
+    static int wordlength = secretword.length();
+    static char letterguess;
+    static boolean madetrueguess;
+    static int correctguesses = 0;
+    static boolean[] previouslyguessed = new boolean[wordlength];
+    static char[] secretletters = new char[wordlength];
+    static char[] displayletters = new char[wordlength];
+
+    public static void main (String[] arg) {
         String guess;
-        int wordlength = secretword.length();
         int life = 10;
-        int correctguesses = 0;
         int falseguesses = 0;
         boolean isrunning = true;
-        boolean madetrueguess;
-        boolean[] previouslyguessed = new boolean[wordlength];
 
-        char letterguess;
-        char[] secretletters = new char[wordlength];
-        char[] displayletters = new char[wordlength];
         char[] falseguess = new char[life];
         char understreck = '_';
 
+        //start
         JOptionPane.showMessageDialog(null, "Hello and welcome to my JOptionPane hangman game :]" + "\n" + " ");
+
         for (int i = 0; i <= wordlength - 1; i++) {
             secretletters[i] = secretword.charAt(i);
             displayletters[i] = understreck;
@@ -36,20 +39,7 @@ public class hangman {
 
 //True guess check + anticheat same letter
 
-            for (int i = 0; i <= wordlength - 1; i++) {
-                if (letterguess == secretletters[i]) {
-                    if(!previouslyguessed[i]) {
-                        displayletters[i] = letterguess;
-                        correctguesses++;
-                        madetrueguess = true;
-                        previouslyguessed[i] = true;
-                    }
-                    else {
-                        JOptionPane.showMessageDialog(null, "Aja baja no cheating the system by typing a previously correct letter.");
-                        break;
-                    }
-                }
-            }
+        truechecker();
 
 //falseguess checker + wrong guess tracker
             if (!madetrueguess) {
@@ -124,6 +114,21 @@ public class hangman {
 
         return JOptionPane.showInputDialog("operation failed");
     }
-
+    public static void truechecker() {
+        for (int i = 0; i <= wordlength - 1; i++) {
+            if (letterguess == secretletters[i]) {
+                if(!previouslyguessed[i]) {
+                    displayletters[i] = letterguess;
+                    correctguesses++;
+                    madetrueguess = true;
+                    previouslyguessed[i] = true;
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Aja baja no cheating the system by typing a previously correct letter.");
+                    break;
+                }
+            }
+        }
+    }
 
 }
