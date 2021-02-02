@@ -11,15 +11,15 @@ public class hangman {
     static boolean[] previouslyguessed = new boolean[wordlength];
     static char[] secretletters = new char[wordlength];
     static char[] displayletters = new char[wordlength];
+    static String guess;
+    static int life = 10;
+    static int falseguesses = 0;
+    static boolean isrunning = true;
+    static char[] falseguess = new char[life];
+    static char understreck = '_';
+
 
     public static void main (String[] arg) {
-        String guess;
-        int life = 10;
-        int falseguesses = 0;
-        boolean isrunning = true;
-
-        char[] falseguess = new char[life];
-        char understreck = '_';
 
         //start
         JOptionPane.showMessageDialog(null, "Hello and welcome to my JOptionPane hangman game :]" + "\n" + " ");
@@ -38,35 +38,17 @@ public class hangman {
             letterguess = guess.toUpperCase().charAt(0);
 
 //True guess check + anticheat same letter
-
         truechecker();
 
 //falseguess checker + wrong guess tracker
-            if (!madetrueguess) {
-                for(int i = 0 ; i <= falseguesses  ; i++){
-                    if (letterguess == falseguess[i]) {
-                        JOptionPane.showMessageDialog(null, "You already guessed that!");
-                        break;
-                    }
-                    else if(falseguess[i] == '\0'){
-                        falseguess[falseguesses] = letterguess;
-                        life--;
-                        if(falseguesses < 9)
-                            falseguesses++;
-                        break;
-                    }
-                }
-            }
-//lifecounter + deathscreen
-            if (life == 0) {
-                isrunning = false;
-                JOptionPane.showMessageDialog(null, "Game Over! You have 0 guesses remaining");
-            }
+        falseguesschecker();
+
+//deathscreen
+
+        areyoudeaddotcom();
+
 //all letters done? + Winscreen
-            if (correctguesses == wordlength) {
-                isrunning = false;
-                JOptionPane.showMessageDialog(null, "You Win! \n With " + life + " lives to spare!");
-            }
+        didyouwindotcom();
         }
     }
 
@@ -125,10 +107,41 @@ public class hangman {
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Aja baja no cheating the system by typing a previously correct letter.");
+                    madetrueguess = true;
                     break;
                 }
             }
         }
     }
 
+    public static void falseguesschecker() {
+        if (!madetrueguess) {
+            for(int i = 0 ; i <= falseguesses  ; i++){
+                if (letterguess == falseguess[i]) {
+                    JOptionPane.showMessageDialog(null, "You already guessed that!");
+                    break;
+                }
+                else if(falseguess[i] == '\0'){
+                    falseguess[falseguesses] = letterguess;
+                    life--;
+                    if(falseguesses < 9)
+                        falseguesses++;
+                    break;
+                }
+            }
+        }
+    }
+    public static void areyoudeaddotcom() {
+        if (life == 0) {
+            isrunning = false;
+            JOptionPane.showMessageDialog(null, "Game Over! You have 0 guesses remaining");
+        }
+    }
+
+    public static void didyouwindotcom() {
+        if (correctguesses == wordlength) {
+            isrunning = false;
+            JOptionPane.showMessageDialog(null, "You Win! \n With " + life + " lives to spare!");
+        }
+    }
 }
