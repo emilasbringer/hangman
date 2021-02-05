@@ -21,43 +21,97 @@ public class hangman {
 
     public static void main (String[] arg) {
 
-        //start
         JOptionPane.showMessageDialog(null, "Hello and welcome to my JOptionPane hangman game :]" + "\n" + " ");
 
         for (int i = 0; i <= wordlength - 1; i++) {
-            secretletters[i] = secretword.charAt(i);
-            displayletters[i] = understreck;
-            previouslyguessed[i] = false;
+            stringtochararray(i);
         }
 
         while (isrunning) {
-            System.out.println(life);
-            madetrueguess = false;
-            guess = hangmanGraphics(life, displayletters, falseguess);
-            assert guess != null;
-            letterguess = guess.toUpperCase().charAt(0);
-
-//True guess check + anticheat same letter
-        truechecker();
-
-//falseguess checker + wrong guess tracker
-        falseguesschecker();
-
-//deathscreen
-
-        areyoudeaddotcom();
-
-//all letters done? + Winscreen
-        didyouwindotcom();
+            gameloopguesscheck();
+            guessedtrue();
+            guessedfalse();
+            isplayerdead();
+            didplayerwin();
         }
     }
 
 
 
+    public static void stringtochararray(int i) {
+        secretletters[i] = secretword.charAt(i);
+        displayletters[i] = understreck;
+        previouslyguessed[i] = false;
+    }
+
+    public static void gameloopguesscheck() {
+        System.out.println(life);
+        madetrueguess = false;
+        guess = hangmanGraphics(life, displayletters, falseguess);
+        if (!guess.equals(""))
+        letterguess = guess.toUpperCase().charAt(0);
+        if (guess.equalsIgnoreCase(secretword)) {
+            correctguesses = wordlength;
+            didplayerwin();
+        }
+    }
+
+
     private static String randomWordGenerator() {
-        String[] word = {"CHOCKLAD", "CHORIZO", "CLICK", "FISK", "FLÖJT", "GET", "HUND", "HUS", "HUVUD", "HÖNA", "HOCKEY", "HOSTA", "KANOT", "MAKARON", "SILL", "UNIVERSUM", "ÅSNA"};
+        String[] word = {"CHOKLAD", "CHORIZO", "CLICK", "FISK", "FLÖJT", "GET", "HUND", "HUS", "HUVUD", "HÖNA", "HOCKEY", "HOSTA", "KANOT", "MAKARON", "SILL", "UNIVERSUM", "ÅSNA"};
         return word[(int) (Math.random() * word.length)];
     }
+
+
+    public static void guessedtrue() {
+        for (int i = 0; i <= wordlength - 1; i++) {
+            if (letterguess == secretletters[i]) {
+                if(!previouslyguessed[i]) {
+                    displayletters[i] = letterguess;
+                    correctguesses++;
+                    madetrueguess = true;
+                    previouslyguessed[i] = true;
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Aja baja no cheating the system by typing a previously correct letter.");
+                    madetrueguess = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    public static void guessedfalse() {
+        if (!madetrueguess) {
+            for(int i = 0 ; i <= falseguesses  ; i++){
+                if (letterguess == falseguess[i]) {
+                    JOptionPane.showMessageDialog(null, "You already guessed that!");
+                    break;
+                }
+                else if(falseguess[i] == '\0'){
+                    falseguess[falseguesses] = letterguess;
+                    life--;
+                    if(falseguesses < 9)
+                        falseguesses++;
+                    break;
+                }
+            }
+        }
+    }
+    public static void isplayerdead() {
+        if (life == 0) {
+            isrunning = false;
+            JOptionPane.showMessageDialog(null, "Game Over! You have 0 guesses remaining");
+        }
+    }
+
+    public static void didplayerwin() {
+        if (correctguesses == wordlength) {
+            isrunning = false;
+            JOptionPane.showMessageDialog(null, "You Win! \n With " + life + " lives to spare!");
+        }
+    }
+
 
     private static String hangmanGraphics(int life, char[] displayletters, char[] falseguess){
         if (life > 9) {
@@ -95,53 +149,5 @@ public class hangman {
         }
 
         return JOptionPane.showInputDialog("operation failed");
-    }
-    public static void truechecker() {
-        for (int i = 0; i <= wordlength - 1; i++) {
-            if (letterguess == secretletters[i]) {
-                if(!previouslyguessed[i]) {
-                    displayletters[i] = letterguess;
-                    correctguesses++;
-                    madetrueguess = true;
-                    previouslyguessed[i] = true;
-                }
-                else {
-                    JOptionPane.showMessageDialog(null, "Aja baja no cheating the system by typing a previously correct letter.");
-                    madetrueguess = true;
-                    break;
-                }
-            }
-        }
-    }
-
-    public static void falseguesschecker() {
-        if (!madetrueguess) {
-            for(int i = 0 ; i <= falseguesses  ; i++){
-                if (letterguess == falseguess[i]) {
-                    JOptionPane.showMessageDialog(null, "You already guessed that!");
-                    break;
-                }
-                else if(falseguess[i] == '\0'){
-                    falseguess[falseguesses] = letterguess;
-                    life--;
-                    if(falseguesses < 9)
-                        falseguesses++;
-                    break;
-                }
-            }
-        }
-    }
-    public static void areyoudeaddotcom() {
-        if (life == 0) {
-            isrunning = false;
-            JOptionPane.showMessageDialog(null, "Game Over! You have 0 guesses remaining");
-        }
-    }
-
-    public static void didyouwindotcom() {
-        if (correctguesses == wordlength) {
-            isrunning = false;
-            JOptionPane.showMessageDialog(null, "You Win! \n With " + life + " lives to spare!");
-        }
     }
 }
